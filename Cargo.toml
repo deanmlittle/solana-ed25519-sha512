@@ -2,7 +2,7 @@
 name = "solana-ed25519-sha512"
 description = "An optimized SHA-512 implementation for onchain Solana Ed25519 verification"
 authors = ["Dean Little <@deanmlittle>"]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
 
