@@ -1,0 +1,11 @@
+[package]
+name = "solana-ed25519-sha512"
+authors = ["Dean Little <@deanmlittle>"]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[lib]
+crate-type = ["lib", "cdylib"]
+
+[dependencies]
