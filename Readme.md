@@ -4,7 +4,7 @@ A zero-dependency, highly-optimized single-round SHA-512 implementation for effi
 
 # Benchmarks
 
-Using the following initialization vectors, we created a baseline an optimized implementation:
+Using the following initialization vectors, we created a baseline and optimized implementation:
 
 ```rs
 pub const R: [u8; 32] = [0x01; 32];
