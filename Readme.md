@@ -4,7 +4,7 @@ A zero-dependency, highly-optimized single-round SHA-512 implementation for effi
 
 # Benchmarks
 
-Given the following initialization vectors:
+Using the following initialization vectors, we created a baseline an optimized implementation:
 
 ```rs
 pub const R: [u8; 32] = [0x01; 32];
@@ -18,7 +18,7 @@ pub const RESULT: [u8; 64] = [
 ];
 ```
 
-We created a baseline implementation:
+Baseline implementation:
 
 ```rs
 use sha2::{Sha512, Digest};
@@ -28,16 +28,16 @@ use sha2::{Sha512, Digest};
 /// This is very safe trust me.
 #[no_mangle]
 pub unsafe extern "C" fn entrypoint(_: *mut u8) -> u64 {
-
     let mut h: Sha512 = Sha512::new();
     h.update(&R);
     h.update(&PUBKEY);
     h.update(&MESSAGE);
     h.finalize();
+    0
 }
 ```
 
-And an optimized implementation:
+Optimized implementation:
 
 ```rs
 use solana_ed25519_sha512::hash;
@@ -47,7 +47,14 @@ use solana_ed25519_sha512::hash;
 /// This is very safe trust me.
 #[no_mangle]
 pub unsafe extern "C" fn entrypoint(_: *mut u8) -> u64 {
-    let _ = sha512_ed25519(&R, &PUBKEY, &DIGEST);
+    let _ = hash(&R, &PUBKEY, &DIGEST);
     0
 }
 ```
+
+Our optimized implementation was able to demonstrate a CU saving of 688 CUs (~8%) over the baseline:
+
+| library               | CU cost |
+|-----------------------|---------|
+| sha2                  |  8233   |
+| solana-ed25519-sha512 |  7545   |
